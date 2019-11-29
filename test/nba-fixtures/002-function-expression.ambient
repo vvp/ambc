@@ -1,0 +1,16 @@
+g[write_ (in_scope).(
+  in_scope|
+  write_ (x).read_ (x))]|
+f[write_ (in_scope).(
+  in_scope|
+  write_ (x).(
+    string[
+      plus[
+        l[string[hello[]]]|
+        r[x[]]
+      ]
+    ]|
+    read_ (string)
+))]|
+write(g, 0).write(g, string[world[]]).read(g, gresult).write(f, 0).write(f, gresult).read(f, fresult).fresult[]
+
