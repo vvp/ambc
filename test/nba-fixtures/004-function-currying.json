@@ -1,0 +1,80 @@
+[
+  {
+    "ambient": "func",
+    "next": {
+      "op": "write_",
+      "args": [
+        "in_scope"
+      ],
+      "next": [
+        {
+          "op": "substitute",
+          "args": "in_scope"
+        },
+        {
+          "op": "write_",
+          "args": [
+            "x"
+          ],
+          "next": [
+            {
+              "op": "read_",
+              "args": [
+                "func"
+              ]
+            },
+            {
+              "ambient": "func",
+              "next": {
+                "op": "write_",
+                "args": [
+                  "in_scope"
+                ],
+                "next": [
+                  {
+                    "op": "substitute",
+                    "args": "in_scope"
+                  },
+                  {
+                    "op": "write_",
+                    "args": [
+                      "y"
+                    ],
+                    "next": [
+                      {
+                        "ambient": "string",
+                        "next": {
+                          "ambient": "plus",
+                          "next": [
+                            {
+                              "ambient": "l",
+                              "next": {
+                                "ambient": "x"
+                              }
+                            },
+                            {
+                              "ambient": "r",
+                              "next": {
+                                "ambient": "y"
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "op": "read_",
+                        "args": [
+                          "string"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

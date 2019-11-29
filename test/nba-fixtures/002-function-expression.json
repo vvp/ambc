@@ -1,0 +1,131 @@
+[
+  {
+    "ambient": "g",
+    "next": {
+      "op": "write_",
+      "args": [
+        "in_scope"
+      ],
+      "next": [
+        {
+          "op": "substitute",
+          "args": "in_scope"
+        },
+        {
+          "op": "write_",
+          "args": [
+            "x"
+          ],
+          "next": {
+            "op": "read_",
+            "args": [
+              "x"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "ambient": "f",
+    "next": {
+      "op": "write_",
+      "args": [
+        "in_scope"
+      ],
+      "next": [
+        {
+          "op": "substitute",
+          "args": "in_scope"
+        },
+        {
+          "op": "write_",
+          "args": [
+            "x"
+          ],
+          "next": [
+            {
+              "ambient": "string",
+              "next": {
+                "ambient": "plus",
+                "next": [
+                  {
+                    "ambient": "l",
+                    "next": {
+                      "ambient": "string",
+                      "next": {
+                        "ambient": "hello"
+                      }
+                    }
+                  },
+                  {
+                    "ambient": "r",
+                    "next": {
+                      "ambient": "x"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "op": "read_",
+              "args": [
+                "string"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "op": "write",
+    "args": [
+      "g",
+      "0"
+    ],
+    "next": {
+      "op": "write",
+      "args": [
+        "g",
+        {
+          "ambient": "string",
+          "next": {
+            "ambient": "world"
+          }
+        }
+      ],
+      "next": {
+        "op": "read",
+        "args": [
+          "g",
+          "gresult"
+        ],
+        "next": {
+          "op": "write",
+          "args": [
+            "f",
+            "0"
+          ],
+          "next": {
+            "op": "write",
+            "args": [
+              "f",
+              "gresult"
+            ],
+            "next": {
+              "op": "read",
+              "args": [
+                "f",
+                "fresult"
+              ],
+              "next": {
+                "ambient": "fresult"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+]

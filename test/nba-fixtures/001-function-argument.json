@@ -1,0 +1,145 @@
+[
+  {
+    "ambient": "g",
+    "next": {
+      "op": "write_",
+      "args": [
+        "in_scope"
+      ],
+      "next": [
+        {
+          "op": "substitute",
+          "args": "in_scope"
+        },
+        {
+          "op": "write_",
+          "args": [
+            "x"
+          ],
+          "next": {
+            "op": "read_",
+            "args": [
+              "x"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "ambient": "f",
+    "next": {
+      "op": "write_",
+      "args": [
+        "in_scope"
+      ],
+      "next": [
+        {
+          "op": "substitute",
+          "args": "in_scope"
+        },
+        {
+          "op": "write_",
+          "args": [
+            "fn",
+            "x"
+          ],
+          "next": {
+            "op": "write",
+            "args": [
+              "fn",
+              "x"
+            ],
+            "next": {
+              "op": "read",
+              "args": [
+                "fn",
+                "fnresult"
+              ],
+              "next": [
+                {
+                  "ambient": "string",
+                  "next": {
+                    "ambient": "plus",
+                    "next": [
+                      {
+                        "ambient": "l",
+                        "next": {
+                          "ambient": "string",
+                          "next": {
+                            "ambient": "hello"
+                          }
+                        }
+                      },
+                      {
+                        "ambient": "r",
+                        "next": {
+                          "ambient": "fnresult"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "op": "read_",
+                  "args": [
+                    "string"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "op": "write",
+    "args": [
+      "g",
+      {
+        "op": "in",
+        "args": [
+          "f",
+          "pw"
+        ]
+      }
+    ],
+    "next": {
+      "op": "write",
+      "args": [
+        "f",
+        {
+          "op": "in_",
+          "args": [
+            "g",
+            "pw"
+          ]
+        }
+      ],
+      "next": {
+        "op": "write",
+        "args": [
+          "f",
+          "g",
+          {
+            "ambient": "string",
+            "next": {
+              "ambient": "world"
+            }
+          }
+        ],
+        "next": {
+          "op": "read",
+          "args": [
+            "g",
+            "result"
+          ],
+          "next": {
+            "ambient": "result"
+          }
+        }
+      }
+    }
+  }
+]
