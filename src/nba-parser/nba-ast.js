@@ -7,11 +7,11 @@ function flatten (x) {
   return x.reduce((acc, val) => acc.concat(flatten(val)), [])
 }
 
-function normalizeNext(arr) {
+function normalizeNext (arr) {
   return flatParallel(flatten(arr))
 }
 
-function normalizeArgs(arr) {
+function normalizeArgs (arr) {
   return flatten(arr)
 }
 
@@ -36,9 +36,8 @@ const subst = (name) => ({
 
 const array = (arr, item) => arr.concat([item])
 
-
 const list = (first, rest) => {
-  let next = {next: normalizeNext(rest)}
+  let next = { next: normalizeNext(rest) }
   return Object.assign(first, next)
 }
 
