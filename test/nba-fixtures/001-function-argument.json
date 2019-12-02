@@ -67,14 +67,16 @@
                         "next": {
                           "ambient": "string",
                           "next": {
-                            "ambient": "hello"
+                            "ambient": "hello",
+                            "next": []
                           }
                         }
                       },
                       {
                         "ambient": "r",
                         "next": {
-                          "ambient": "fnresult"
+                          "ambient": "fnresult",
+                          "next": []
                         }
                       }
                     ]
@@ -125,7 +127,8 @@
           {
             "ambient": "string",
             "next": {
-              "ambient": "world"
+              "ambient": "world",
+              "next": []
             }
           }
         ],
@@ -136,7 +139,8 @@
             "result"
           ],
           "next": {
-            "ambient": "result"
+            "ambient": "result",
+            "next": []
           }
         }
       }

@@ -48,13 +48,15 @@
                             {
                               "ambient": "l",
                               "next": {
-                                "ambient": "x"
+                                "ambient": "x",
+                                "next": []
                               }
                             },
                             {
                               "ambient": "r",
                               "next": {
-                                "ambient": "y"
+                                "ambient": "y",
+                                "next": []
                               }
                             }
                           ]
