@@ -21,8 +21,7 @@
     "orbit-db-io": "^0.1.1",
     "pegjs": "^0.10.0",
     "yargs": "^14.2.0",
-    "nearley": "^2.19.0",
-    "immutable": "^4.0.0-rc.12"
+    "nearley": "^2.19.0"
   },
   "devDependencies": {
     "cids": "^0.7.1",

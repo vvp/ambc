@@ -1,6 +1,3 @@
-const ImmutableJS = require('immutable')
-const {List, Map} = ImmutableJS
-
 function flatParallel (x) {
   return (x !== undefined && Array.isArray(x) && x.length == 1) ? x[0] : x
 }
@@ -44,6 +41,6 @@ const list = (first, rest) => {
   return Object.assign(first, next)
 }
 
-const program = (program) => ImmutableJS.fromJS(program)
+const program = (program) => program
 
 module.exports = { ambient, cap, cocap, subst, array, list, program }

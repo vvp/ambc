@@ -1,12 +1,10 @@
-const ImmutableJS = require('immutable')
-const { List, Map } = ImmutableJS
 
 const removeUnnecessaryParens = (expr) => expr.startsWith('(') ? expr.substring(1, expr.length - 2) : expr
 const parallelAlgebra = (list, join) => list.map(x => toAlgebra(x, join)).join(join)
 
 const opAlgebra = (map) => {
-  let op = map.get('op')
-  let argstring = toAlgebra(map.get('args'), ', ')
+  let op = map.op
+  let argstring = toAlgebra(map.args, ', ')
   switch (op) {
     case 'substitute':
       return `:${argstring}`
@@ -30,20 +28,17 @@ const opAlgebra = (map) => {
 }
 
 const sequentialAlgebra = (map) => {
-  let next = map.get('next')
-  let amb = map.get('ambient')
+  let next = map.next
+  let amb = map.ambient
   if (amb !== undefined)
     return `${amb}[${removeUnnecessaryParens(toAlgebra(next, '|'))}]`
 
   let opString = opAlgebra(map)
-  const isLastOne = next === undefined || (List.isList(next) && next.size == 0)
+  const isLastOne = next === undefined || (Array.isArray(next) && next.length == 0)
   if (isLastOne)
     return opString
 
-  if (Map.isMap(next)) {
-    return `${opString}.${toAlgebra(next)}`
-  }
-  if (List.isList(next) && next.size > 1) {
+  if (Array.isArray(next) && next.length > 1) {
     return `${opString}.(${toAlgebra(next, '|')})`
   }
   return `${opString}.${toAlgebra(next, '|')}`
@@ -51,10 +46,10 @@ const sequentialAlgebra = (map) => {
 }
 
 const toAlgebra = (expr, join) => {
-  if (List.isList(expr)) {
+  if (Array.isArray(expr)) {
     return parallelAlgebra(expr, join)
   }
-  if (Map.isMap(expr)) {
+  if (typeof expr === 'object') {
     return sequentialAlgebra(expr)
   }
   return expr
