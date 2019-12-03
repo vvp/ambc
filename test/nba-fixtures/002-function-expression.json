@@ -1,6 +1,9 @@
 [
   {
-    "ambient": "g",
+    "op": "create",
+    "args": [
+      "g"
+    ],
     "next": {
       "op": "write_",
       "args": [
@@ -27,7 +30,10 @@
     }
   },
   {
-    "ambient": "f",
+    "op": "create",
+    "args": [
+      "f"
+    ],
     "next": {
       "op": "write_",
       "args": [
@@ -45,24 +51,45 @@
           ],
           "next": [
             {
-              "ambient": "string",
+              "op": "create",
+              "args": [
+                "string"
+              ],
               "next": {
-                "ambient": "plus",
+                "op": "create",
+                "args": [
+                  "plus"
+                ],
                 "next": [
                   {
-                    "ambient": "l",
+                    "op": "create",
+                    "args": [
+                      "l"
+                    ],
                     "next": {
-                      "ambient": "string",
+                      "op": "create",
+                      "args": [
+                        "string"
+                      ],
                       "next": {
-                        "ambient": "hello",
+                        "op": "create",
+                        "args": [
+                          "hello"
+                        ],
                         "next": []
                       }
                     }
                   },
                   {
-                    "ambient": "r",
+                    "op": "create",
+                    "args": [
+                      "r"
+                    ],
                     "next": {
-                      "ambient": "x",
+                      "op": "create",
+                      "args": [
+                        "x"
+                      ],
                       "next": []
                     }
                   }
@@ -91,9 +118,15 @@
       "args": [
         "g",
         {
-          "ambient": "string",
+          "op": "create",
+          "args": [
+            "string"
+          ],
           "next": {
-            "ambient": "world",
+            "op": "create",
+            "args": [
+              "world"
+            ],
             "next": []
           }
         }
@@ -123,7 +156,10 @@
                 "fresult"
               ],
               "next": {
-                "ambient": "fresult",
+                "op": "create",
+                "args": [
+                  "fresult"
+                ],
                 "next": []
               }
             }

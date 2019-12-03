@@ -16,7 +16,8 @@ function normalizeArgs (arr) {
 }
 
 const ambient = (name, parallel) => ({
-  ambient: name,
+  op: 'create',
+  args: [name],
   next: normalizeNext(parallel)
 })
 
@@ -31,7 +32,8 @@ const cocap = (op, args) => ({
 })
 
 const subst = (name) => ({
-  op: 'substitute', args: normalizeArgs(name)
+  op: 'substitute',
+  args: normalizeArgs(name)
 })
 
 const array = (arr, item) => arr.concat([item])

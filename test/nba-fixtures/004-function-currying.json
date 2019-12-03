@@ -1,6 +1,9 @@
 [
   {
-    "ambient": "func",
+    "op": "create",
+    "args": [
+      "func"
+    ],
     "next": {
       "op": "write_",
       "args": [
@@ -24,7 +27,10 @@
               ]
             },
             {
-              "ambient": "func",
+              "op": "create",
+              "args": [
+                "func"
+              ],
               "next": {
                 "op": "write_",
                 "args": [
@@ -42,21 +48,39 @@
                     ],
                     "next": [
                       {
-                        "ambient": "string",
+                        "op": "create",
+                        "args": [
+                          "string"
+                        ],
                         "next": {
-                          "ambient": "plus",
+                          "op": "create",
+                          "args": [
+                            "plus"
+                          ],
                           "next": [
                             {
-                              "ambient": "l",
+                              "op": "create",
+                              "args": [
+                                "l"
+                              ],
                               "next": {
-                                "ambient": "x",
+                                "op": "create",
+                                "args": [
+                                  "x"
+                                ],
                                 "next": []
                               }
                             },
                             {
-                              "ambient": "r",
+                              "op": "create",
+                              "args": [
+                                "r"
+                              ],
                               "next": {
-                                "ambient": "y",
+                                "op": "create",
+                                "args": [
+                                  "y"
+                                ],
                                 "next": []
                               }
                             }

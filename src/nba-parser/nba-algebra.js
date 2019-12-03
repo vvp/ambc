@@ -6,6 +6,8 @@ const opAlgebra = (map) => {
   let op = map.op
   let argstring = toAlgebra(map.args, ', ')
   switch (op) {
+    case 'create':
+      return `${argstring}[${removeUnnecessaryParens(toAlgebra(map.next, '|'))}]`
     case 'substitute':
       return `:${argstring}`
     case 'write':
@@ -29,12 +31,9 @@ const opAlgebra = (map) => {
 
 const sequentialAlgebra = (map) => {
   let next = map.next
-  let amb = map.ambient
-  if (amb !== undefined)
-    return `${amb}[${removeUnnecessaryParens(toAlgebra(next, '|'))}]`
 
   let opString = opAlgebra(map)
-  const isLastOne = next === undefined || (Array.isArray(next) && next.length == 0)
+  const isLastOne = next === undefined || (Array.isArray(next) && next.length == 0) || map.op === 'create'
   if (isLastOne)
     return opString
 

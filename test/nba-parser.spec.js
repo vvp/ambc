@@ -16,6 +16,8 @@ describe('NBA Parser', function () {
       // console.log(JSON.stringify(parse(syntax.toString().trim())))
       const result = fs.readFileSync(PARSER_FIXTURES_PATH + fixtures[1]).toString().trim()
       const nba = parser.parse(syntax)
+
+      console.log("nba.toJS(): " + JSON.stringify(nba.toJS()))
       assert.deepStrictEqual(nba.toJS(), JSON.parse(result), `Failed at "${fixtures[0]}`)
 
       assert.deepStrictEqual(nba.toAlgebra(), syntax.replace(TRIM_LINEBREAKS_LEADING_WS, ''), `ToAlgebra failed at "${fixtures[0]}`)
