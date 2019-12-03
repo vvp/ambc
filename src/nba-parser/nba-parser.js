@@ -15,7 +15,7 @@ var grammar = {
     {"name": "__$ebnf$1", "symbols": ["__$ebnf$1", "wschar"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
     {"name": "__", "symbols": ["__$ebnf$1"], "postprocess": function(d) {return null;}},
     {"name": "wschar", "symbols": [/[ \t\n\v\f]/], "postprocess": id},
-    {"name": "main", "symbols": ["PARALLEL"], "postprocess": id},
+    {"name": "main", "symbols": ["PARALLEL"], "postprocess": ([parallel]) => ast.program(parallel)},
     {"name": "OPERATION", "symbols": ["VARIABLE"], "postprocess": id},
     {"name": "OPERATION", "symbols": ["CAPABILITY"], "postprocess": id},
     {"name": "OPERATION", "symbols": ["MESSAGE_OP"], "postprocess": id},

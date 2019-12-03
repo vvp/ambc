@@ -12,5 +12,5 @@ f[write_ (in_scope).(
     ]|
     read_ (string)
 ))]|
-write(g, 0).write(g, string[world[]]).read(g, gresult).write(f, 0).write(f, gresult).read(f, fresult).fresult[]
+write (g, 0).write (g, string[world[]]).read (g, gresult).write (f, 0).write (f, gresult).read (f, fresult).fresult[]
 

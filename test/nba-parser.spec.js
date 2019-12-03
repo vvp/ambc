@@ -4,6 +4,7 @@ const parser = require('../src/nba-parser')
 const fs = require('fs')
 
 const PARSER_FIXTURES_PATH = 'test/nba-fixtures/'
+const TRIM_LINEBREAKS_LEADING_WS = /\n */g
 
 describe('NBA Parser', function () {
 
@@ -14,9 +15,10 @@ describe('NBA Parser', function () {
       const syntax = fs.readFileSync(PARSER_FIXTURES_PATH + fixtures[0]).toString().trim()
       // console.log(JSON.stringify(parse(syntax.toString().trim())))
       const result = fs.readFileSync(PARSER_FIXTURES_PATH + fixtures[1]).toString().trim()
-      let value = parser.parse(syntax)
-      console.log(JSON.stringify(value))
-      assert.deepStrictEqual(value, JSON.parse(result), `Failed at "${fixtures[0]}`)
+      const nba = parser.parse(syntax)
+      assert.deepStrictEqual(nba.toJS(), JSON.parse(result), `Failed at "${fixtures[0]}`)
+
+      assert.deepStrictEqual(nba.toAlgebra(), syntax.replace(TRIM_LINEBREAKS_LEADING_WS, ''), `ToAlgebra failed at "${fixtures[0]}`)
       fixtures.splice(0, 2)
     }
   })

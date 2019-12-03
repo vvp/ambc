@@ -5,7 +5,7 @@
 const ast = require('./nba-ast.js')
 %}
 
-main -> PARALLEL {% id %}
+main -> PARALLEL {% ([parallel]) => ast.program(parallel) %}
 
 OPERATION ->
     VARIABLE {% id %} |
