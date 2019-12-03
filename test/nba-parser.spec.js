@@ -1,4 +1,5 @@
 const assert = require('assert')
+const seedrandom = require('seedrandom')
 
 const parser = require('../src/nba-parser')
 const fs = require('fs')
@@ -18,6 +19,15 @@ describe('NBA Parser', function () {
       const nba = parser.parse(syntax)
 
       console.log("nba.toJS(): " + JSON.stringify(nba.toJS()))
+
+
+      const rnd = seedrandom()
+      const seed = rnd().toString()
+      const abba = nba.simulateNondeterminism(seed).toJS()
+      const otherAbba = nba.simulateNondeterminism(seed).toJS()
+      assert.notStrictEqual(abba, otherAbba)
+      assert.deepStrictEqual(abba, otherAbba)
+
       assert.deepStrictEqual(nba.toJS(), JSON.parse(result), `Failed at "${fixtures[0]}`)
 
       assert.deepStrictEqual(nba.toAlgebra(), syntax.replace(TRIM_LINEBREAKS_LEADING_WS, ''), `ToAlgebra failed at "${fixtures[0]}`)

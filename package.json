@@ -18,10 +18,10 @@
     "js2amb": "aphelionz/js2amb#master",
     "mime-types": "^2.1.25",
     "multiaddr": "^7.2.1",
+    "nearley": "^2.19.0",
     "orbit-db-io": "^0.1.1",
     "pegjs": "^0.10.0",
-    "yargs": "^14.2.0",
-    "nearley": "^2.19.0"
+    "seedrandom": "latest"
   },
   "devDependencies": {
     "cids": "^0.7.1",
