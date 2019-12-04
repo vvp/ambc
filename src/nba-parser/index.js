@@ -1,6 +1,5 @@
 const nearley = require("nearley")
 const grammar = require("./nba-parser.js")
-const {toAlgebra} = require('./nba-algebra.js')
 const {randomizer} = require('./nba-ast-randomizer.js')
 
 module.exports = {parse: (syntax) => {
@@ -11,8 +10,8 @@ module.exports = {parse: (syntax) => {
         simulateNondeterminism: (seed) => {
             return api(randomizer(seed, ob))
         },
-        toJS: () => ob,
-        toAlgebra: () => toAlgebra(ob)
+        toJS: () => ob.toJS(),
+        toAlgebra: () => ob.toAlgebra()
     })
     return api(result)
 }}

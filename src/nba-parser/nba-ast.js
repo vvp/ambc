@@ -1,48 +1,76 @@
-function flatParallel (x) {
-  return (x !== undefined && Array.isArray(x) && x.length == 1) ? x[0] : x
+
+const toAlgebra = (x) => x !== undefined && x.toAlgebra !== undefined ? x.toAlgebra() : x
+const toJS = (x) => {
+  if (x === undefined)
+    return x
+
+  if (Array.isArray(x))
+    return x.map(toJS)
+
+  if (x.toJS !== undefined)
+    return x.toJS()
+
+  return x
 }
 
-function flatten (x) {
-  if (!Array.isArray(x)) return x
-  return x.reduce((acc, val) => acc.concat(flatten(val)), [])
+function program (context) {
+  this.globalContext = context
+  this.toJS = () => toJS(this.globalContext)
+  this.toAlgebra = () => toAlgebra(this.globalContext)
 }
 
-function normalizeNext (arr) {
-  return flatParallel(flatten(arr))
+function ambient (name, par) {
+  this.name = name
+  this.context = par
+  this.toJS = () => ({op: 'create', args: [this.name], next:toJS(this.context)})
+  this.toAlgebra = () => `${this.name}[${toAlgebra(this.context)}]`
 }
 
-function normalizeArgs (arr) {
-  return flatten(arr)
+function subst( target ) {
+  this.op = 'substitute'
+  this.args = [target]
+  this.toJS = () => ({op: this.op, args:toJS(this.args)})
+  this.toAlgebra = () => `:${this.args[0]}`
 }
 
-const ambient = (name, parallel) => ({
-  op: 'create',
-  args: [name],
-  next: normalizeNext(parallel)
-})
-
-const cap = (op, target, args) => ({
-  op: op,
-  args: normalizeArgs([target, args])
-})
-
-const cocap = (op, args) => ({
-  op: op,
-  args: normalizeArgs(args)
-})
-
-const subst = (name) => ({
-  op: 'substitute',
-  args: normalizeArgs(name)
-})
-
-const array = (arr, item) => arr.concat([item])
-
-const list = (first, rest) => {
-  let next = { next: normalizeNext(rest) }
-  return Object.assign(first, next)
+function cap( op, target, names ) {
+  this.op = op
+  this.args = [target].concat(names)
+  this.toJS = () => ({op: this.op, args:toJS(this.args)})
+  this.toAlgebra = () => `${this.op} (${this.args.map(toAlgebra).join(', ')})`
 }
 
-const program = (program) => program
+function cocap( op, names ) {
+  this.op = op
+  this.args = names
+  this.toJS = () => ({op: this.op, args:toJS(this.args)})
+  this.toAlgebra = () => `${this.op} (${this.args.map(toAlgebra).join(', ')})`
+}
 
-module.exports = { ambient, cap, cocap, subst, array, list, program }
+function parallel(arr, item) {
+  this.ctx = (arr instanceof parallel ? arr.ctx : arr ).concat(item instanceof parallel ? item.ctx : item)
+  this.toJS = () => toJS(this.ctx)
+  this.toAlgebra = () => `${this.ctx.map(toAlgebra).join('|')}`
+}
+
+function sequential(first, rest) {
+  Object.assign(this, first)
+  this.next = rest
+  this.toJS = () => {
+    const target = toJS(first)
+    target.next = toJS(this.next)
+    return target
+  }
+  this.toAlgebra = () => `${toAlgebra(first)}.${this.next instanceof parallel ? `(${toAlgebra(this.next)})` : toAlgebra(this.next)}`
+}
+
+module.exports = {
+  program,
+  ambient,
+  subst,
+  cap,
+  cocap,
+  context: parallel,
+  list: sequential,
+  array: (arr, item) => arr.concat(item)
+}

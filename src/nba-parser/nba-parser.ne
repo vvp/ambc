@@ -3,9 +3,10 @@
 @{%
 
 const ast = require('./nba-ast.js')
+
 %}
 
-main -> PARALLEL {% ([parallel]) => ast.program(parallel) %}
+main -> PARALLEL {% ([parallel]) => new ast.program(parallel) %}
 
 OPERATION ->
     VARIABLE {% id %} |
@@ -13,8 +14,8 @@ OPERATION ->
     MESSAGE_OP {% id %}
 
 AMBIENT ->
-    NAME "[" _ PARALLEL _ "]" {% ([name,,,parallel]) => ast.ambient(name, parallel) %} |
-    NAME "[" _ "]" {% ([name]) => ast.ambient(name, []) %}
+    NAME "[" _ PARALLEL _ "]" {% ([name,,,parallel]) => new ast.ambient(name, parallel) %} |
+    NAME "[" _ "]" {% ([name]) => new ast.ambient(name, []) %}
 
 CAPABILITY ->
     READS {% id %}  |
@@ -24,25 +25,25 @@ CAPABILITY ->
 
 
 READS ->
-    "read" _ "(" NAME _ "," _ NAMES ")" {% ([,,,target,,,,names]) => ast.cap('read', target, names) %} |
-    "read_" _ "(" MESSAGES ")" {% ([,,,messages]) => ast.cocap('read_', messages) %} |
-    "read_" _ "(" _ ")" {% ([]) => ast.cocap('read_', []) %}
+    "read" _ "(" NAME _ "," _ NAMES ")" {% ([,,,target,,,,names]) => new ast.cap('read', target, names) %} |
+    "read_" _ "(" MESSAGES ")" {% ([,,,messages]) => new ast.cocap('read_', messages) %} |
+    "read_" _ "(" _ ")" {% ([]) => new ast.cocap('read_', []) %}
 
 WRITES ->
-    "write" _ "(" NAME _ "," _ MESSAGES ")" {% ([,,,target,,,,messages]) => ast.cap('write', target, messages) %} |
-    "write_" _ "(" NAMES ")" {% ([,,,names]) => ast.cocap('write_', names) %} |
-    "write_" _ "(" _ ")" {% ([]) => ast.cocap('write_', []) %}
+    "write" _ "(" NAME _ "," _ MESSAGES ")" {% ([,,,target,,,,messages]) => new ast.cap('write', target, messages) %} |
+    "write_" _ "(" NAMES ")" {% ([,,,names]) => new ast.cocap('write_', names) %} |
+    "write_" _ "(" _ ")" {% ([]) => new ast.cocap('write_', []) %}
 
 INS ->
-    "in" _ "(" NAME _ "," _ NAME ")" {% ([,,,name,,,,pw]) => ast.cap('in', name, pw) %} |
-    "in_" _ "(" NAME _ "," _ NAME ")" {% ([,,,name,,,,pw]) => ast.cocap('in_', [name, pw]) %}
+    "in" _ "(" NAME _ "," _ NAME ")" {% ([,,,name,,,,pw]) => new ast.cap('in', name, pw) %} |
+    "in_" _ "(" NAME _ "," _ NAME ")" {% ([,,,name,,,,pw]) => new ast.cocap('in_', [name, pw]) %}
 
 OUTS ->
-    "out" _ "(" NAME _ "," _ NAME ")" {% ([,,,name,,,,pw]) => ast.cap('out', name, pw) %} |
-    "out_" _ "(" NAME _ "," _ NAME ")" {% ([,,,name,,,,pw]) => ast.cocap('out_', [name, pw]) %}
+    "out" _ "(" NAME _ "," _ NAME ")" {% ([,,,name,,,,pw]) => new ast.cap('out', name, pw) %} |
+    "out_" _ "(" NAME _ "," _ NAME ")" {% ([,,,name,,,,pw]) => new ast.cocap('out_', [name, pw]) %}
 
 MESSAGE_OP ->
-    ":" NAME {% ([,name]) => ast.subst(name)  %}
+    ":" NAME {% ([,name]) => new ast.subst(name)  %}
 
 MESSAGE ->
     SEQUENTIAL {% id %} |
@@ -54,14 +55,14 @@ MESSAGES ->
 
 
 SEQUENTIAL ->
-    OPERATION _ "." _ SEQUENTIAL {% ([first,,,,rest]) => ast.list(first, rest) %} |
+    OPERATION _ "." _ SEQUENTIAL {% ([first,,,,rest]) => new ast.list(first, rest) %} |
     OPERATION {% id %} |
-    "(" _ PARALLEL _ ")" {% ([,,first]) => ast.array([], first) %} |
+    "(" _ PARALLEL _ ")" {% ([,,first]) => new ast.context([], first) %} |
     AMBIENT {% id %}
 
 PARALLEL ->
-    PARALLEL _ "|" _ SEQUENTIAL {% ([left,,,,right]) => ast.array(left, right) %} |
-    SEQUENTIAL {% ([seq]) => ast.array([], seq) %}
+    PARALLEL _ "|" _ SEQUENTIAL {% ([left,,,,right]) => new ast.context(left, right) %} |
+    SEQUENTIAL {% ([seq]) => new ast.context([], seq) %}
 
 
 NAMES ->
