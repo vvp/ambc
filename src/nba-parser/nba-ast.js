@@ -13,6 +13,13 @@ const toJS = (x) => {
   return x
 }
 
+const initOp = (obj) => {
+  if (obj.next !== undefined)
+    return obj
+
+  return Object.assign({next: []}, obj)
+}
+
 function program (context) {
   this.globalContext = context
   this.toJS = () => toJS(this.globalContext)
@@ -22,28 +29,28 @@ function program (context) {
 function ambient (name, par) {
   this.name = name
   this.context = par
-  this.toJS = () => ({op: 'create', args: [this.name], next:toJS(this.context)})
+  this.toJS = () => initOp({op: 'create', args: [this.name], next:toJS(this.context)})
   this.toAlgebra = () => `${this.name}[${toAlgebra(this.context)}]`
 }
 
 function subst( target ) {
   this.op = 'substitute'
   this.args = [target]
-  this.toJS = () => ({op: this.op, args:toJS(this.args)})
+  this.toJS = () => initOp({op: this.op, args:toJS(this.args)})
   this.toAlgebra = () => `:${this.args[0]}`
 }
 
 function cap( op, target, names ) {
   this.op = op
   this.args = [target].concat(names)
-  this.toJS = () => ({op: this.op, args:toJS(this.args)})
+  this.toJS = () => initOp({op: this.op, args:toJS(this.args)})
   this.toAlgebra = () => `${this.op} (${this.args.map(toAlgebra).join(', ')})`
 }
 
 function cocap( op, names ) {
   this.op = op
   this.args = names
-  this.toJS = () => ({op: this.op, args:toJS(this.args)})
+  this.toJS = () => initOp({op: this.op, args:toJS(this.args)})
   this.toAlgebra = () => `${this.op} (${this.args.map(toAlgebra).join(', ')})`
 }
 
@@ -58,7 +65,8 @@ function sequential(first, rest) {
   this.next = rest
   this.toJS = () => {
     const target = toJS(first)
-    target.next = toJS(this.next)
+    const next = toJS(this.next)
+    target.next = Array.isArray(next) ? next : [next]
     return target
   }
   this.toAlgebra = () => `${toAlgebra(first)}.${this.next instanceof parallel ? `(${toAlgebra(this.next)})` : toAlgebra(this.next)}`

@@ -6,24 +6,18 @@
     ],
     "next": [
       {
-        "op": "write_",
-        "args": [
-          "in_scope"
-        ],
         "next": [
           {
+            "next": [],
             "op": "substitute",
             "args": [
               "in_scope"
             ]
           },
           {
-            "op": "write_",
-            "args": [
-              "x"
-            ],
             "next": [
               {
+                "next": [],
                 "op": "read_",
                 "args": [
                   "func"
@@ -36,22 +30,15 @@
                 ],
                 "next": [
                   {
-                    "op": "write_",
-                    "args": [
-                      "in_scope"
-                    ],
                     "next": [
                       {
+                        "next": [],
                         "op": "substitute",
                         "args": [
                           "in_scope"
                         ]
                       },
                       {
-                        "op": "write_",
-                        "args": [
-                          "y"
-                        ],
                         "next": [
                           {
                             "op": "create",
@@ -100,19 +87,36 @@
                             ]
                           },
                           {
+                            "next": [],
                             "op": "read_",
                             "args": [
                               "string"
                             ]
                           }
+                        ],
+                        "op": "write_",
+                        "args": [
+                          "y"
                         ]
                       }
+                    ],
+                    "op": "write_",
+                    "args": [
+                      "in_scope"
                     ]
                   }
                 ]
               }
+            ],
+            "op": "write_",
+            "args": [
+              "x"
             ]
           }
+        ],
+        "op": "write_",
+        "args": [
+          "in_scope"
         ]
       }
     ]
