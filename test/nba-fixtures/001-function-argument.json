@@ -14,7 +14,9 @@
           {
             "op": "substitute",
             "args": [
-              "in_scope"
+              {
+                "subst": "in_scope"
+              }
             ],
             "next": []
           },
@@ -27,7 +29,9 @@
               {
                 "op": "read_",
                 "args": [
-                  "x"
+                  {
+                    "subst": "x"
+                  }
                 ],
                 "next": []
               }
@@ -52,7 +56,9 @@
           {
             "op": "substitute",
             "args": [
-              "in_scope"
+              {
+                "subst": "in_scope"
+              }
             ],
             "next": []
           },
@@ -66,14 +72,20 @@
               {
                 "op": "write",
                 "args": [
-                  "fn",
-                  "x"
+                  {
+                    "subst": "fn"
+                  },
+                  {
+                    "subst": "x"
+                  }
                 ],
                 "next": [
                   {
                     "op": "read",
                     "args": [
-                      "fn",
+                      {
+                        "subst": "fn"
+                      },
                       "fnresult"
                     ],
                     "next": [
@@ -121,7 +133,9 @@
                                   {
                                     "op": "create",
                                     "args": [
-                                      "fnresult"
+                                      {
+                                        "subst": "fnresult"
+                                      }
                                     ],
                                     "next": []
                                   }
@@ -201,14 +215,16 @@
               {
                 "op": "read",
                 "args": [
-                  "g",
+                  "f",
                   "result"
                 ],
                 "next": [
                   {
                     "op": "create",
                     "args": [
-                      "result"
+                      {
+                        "subst": "result"
+                      }
                     ],
                     "next": []
                   }

@@ -30,15 +30,15 @@ function program (context) {
 function ambient (name, par) {
   this.name = name
   this.context = par
-  this.toJS = () => initOp({op: 'create', args: [this.name], next:toJS(this.context)})
-  this.toAlgebra = () => `${this.name}[${toAlgebra(this.context)}]`
+  this.toJS = () => initOp({op: 'create', args: toJS([this.name]), next:toJS(this.context)})
+  this.toAlgebra = () => `${toAlgebra(this.name)}[${toAlgebra(this.context)}]`
 }
 
 function subst( target ) {
   this.op = 'substitute'
-  this.args = [target]
-  this.toJS = () => initOp({op: this.op, args:toJS(this.args)})
-  this.toAlgebra = () => `:${this.args[0]}`
+  this.args = target
+  this.toJS = () => initOp({op: this.op, args:toJS([this.args])})
+  this.toAlgebra = () => `:${toAlgebra(this.args)}`
 }
 
 function cap( op, target, names ) {
@@ -73,10 +73,17 @@ function sequential(first, rest) {
   this.toAlgebra = () => `${toAlgebra(first)}.${this.next instanceof parallel ? `(${toAlgebra(this.next)})` : toAlgebra(this.next)}`
 }
 
+function substTarget(name) {
+  this.target = name
+  this.toAlgebra = () => `{${this.target}}`
+  this.toJS = () => ({subst: this.target})
+}
+
 module.exports = {
   program,
   ambient,
   subst,
+  substTarget,
   cap,
   cocap,
   context: parallel,

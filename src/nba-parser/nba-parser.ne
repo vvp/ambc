@@ -25,22 +25,22 @@ CAPABILITY ->
 
 
 READS ->
-    "read" _ "(" NAME _ "," _ NAMES ")" {% ([,,,target,,,,names]) => new ast.cap('read', target, names) %} |
+    "read" _ "(" NAME _ "," _ NAME_BINDINGS ")" {% ([,,,target,,,,names]) => new ast.cap('read', target, names) %} |
     "read_" _ "(" MESSAGES ")" {% ([,,,messages]) => new ast.cocap('read_', messages) %} |
     "read_" _ "(" _ ")" {% ([]) => new ast.cocap('read_', []) %}
 
 WRITES ->
     "write" _ "(" NAME _ "," _ MESSAGES ")" {% ([,,,target,,,,messages]) => new ast.cap('write', target, messages) %} |
-    "write_" _ "(" NAMES ")" {% ([,,,names]) => new ast.cocap('write_', names) %} |
+    "write_" _ "(" NAME_BINDINGS ")" {% ([,,,names]) => new ast.cocap('write_', names) %} |
     "write_" _ "(" _ ")" {% ([]) => new ast.cocap('write_', []) %}
 
 INS ->
     "in" _ "(" NAME _ "," _ NAME ")" {% ([,,,name,,,,pw]) => new ast.cap('in', name, pw) %} |
-    "in_" _ "(" NAME _ "," _ NAME ")" {% ([,,,name,,,,pw]) => new ast.cocap('in_', [name, pw]) %}
+    "in_" _ "(" NAME_BINDING _ "," _ NAME ")" {% ([,,,name,,,,pw]) => new ast.cocap('in_', [name, pw]) %}
 
 OUTS ->
     "out" _ "(" NAME _ "," _ NAME ")" {% ([,,,name,,,,pw]) => new ast.cap('out', name, pw) %} |
-    "out_" _ "(" NAME _ "," _ NAME ")" {% ([,,,name,,,,pw]) => new ast.cocap('out_', [name, pw]) %}
+    "out_" _ "(" NAME_BINDING _ "," _ NAME ")" {% ([,,,name,,,,pw]) => new ast.cocap('out_', [name, pw]) %}
 
 MESSAGE_OP ->
     ":" NAME {% ([,name]) => new ast.subst(name)  %}
@@ -69,6 +69,16 @@ NAMES ->
     NAMES _ "," _ NAME {% ([left,,,,right]) => ast.array(left, right) %} |
     NAME {% ([name]) => ast.array([], name) %}
 
+NAME_BINDINGS ->
+    NAME_BINDINGS _ "," _ NAME_BINDING {% ([left,,,,right]) => ast.array(left, right) %} |
+    NAME_BINDING {% ([name]) => ast.array([], name) %}
 
-NAME -> [_a-z0-9_]:+ {% ([name]) => name.join('') %}
+
+NAME_BINDING ->
+    [_a-z0-9]:+ {% ([name]) => name.join('') %}
+
+NAME ->
+    [_a-z0-9]:+ {% ([name]) => name.join('') %} |
+    "{" [_a-z0-9]:+ "}" {% ([,name]) => new ast.substTarget(name.join('')) %}
+
 VARIABLE -> [A-Z]:+ {% ([variable]) => variable.join('') %}
