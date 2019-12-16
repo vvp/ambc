@@ -55,8 +55,8 @@ function cocap( op, names ) {
   this.toAlgebra = () => `${this.op} (${this.args.map(toAlgebra).join(', ')})`
 }
 
-function parallel(arr, item) {
-  this.ctx = (arr instanceof parallel ? arr.ctx : arr ).concat(item instanceof parallel ? item.ctx : item)
+function parallel(first, rest) {
+  this.ctx = (first instanceof parallel ? first.ctx : [first]).concat(rest instanceof parallel ? rest.ctx : rest )
   this.toJS = () => toJS(this.ctx)
   this.toAlgebra = () => `${this.ctx.map(toAlgebra).join('|')}`
 }

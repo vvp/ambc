@@ -57,12 +57,12 @@ MESSAGES ->
 SEQUENTIAL ->
     OPERATION _ "." _ SEQUENTIAL {% ([first,,,,rest]) => new ast.list(first, rest) %} |
     OPERATION {% id %} |
-    "(" _ PARALLEL _ ")" {% ([,,first]) => new ast.context([], first) %} |
+    "(" _ PARALLEL _ ")" {% ([,,first]) => first %} |
     AMBIENT {% id %}
 
 PARALLEL ->
-    PARALLEL _ "|" _ SEQUENTIAL {% ([left,,,,right]) => new ast.context(left, right) %} |
-    SEQUENTIAL {% ([seq]) => new ast.context([], seq) %}
+    SEQUENTIAL _ "|" _ PARALLEL  {% ([first,,,,rest]) => new ast.context(first, rest) %} |
+    SEQUENTIAL {% ([seq]) => new ast.context(seq, []) %}
 
 
 NAMES ->
