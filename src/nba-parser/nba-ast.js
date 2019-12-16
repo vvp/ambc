@@ -17,7 +17,8 @@ const initOp = (obj) => {
   if (obj.next !== undefined)
     return obj
 
-  return Object.assign({next: []}, obj)
+  obj.next = []
+  return obj
 }
 
 function program (context) {

@@ -6,33 +6,33 @@
     ],
     "next": [
       {
-        "next": [
-          {
-            "next": [],
-            "op": "substitute",
-            "args": [
-              "in_scope"
-            ]
-          },
-          {
-            "next": [
-              {
-                "next": [],
-                "op": "read_",
-                "args": [
-                  "x"
-                ]
-              }
-            ],
-            "op": "write_",
-            "args": [
-              "x"
-            ]
-          }
-        ],
         "op": "write_",
         "args": [
           "in_scope"
+        ],
+        "next": [
+          {
+            "op": "substitute",
+            "args": [
+              "in_scope"
+            ],
+            "next": []
+          },
+          {
+            "op": "write_",
+            "args": [
+              "x"
+            ],
+            "next": [
+              {
+                "op": "read_",
+                "args": [
+                  "x"
+                ],
+                "next": []
+              }
+            ]
+          }
         ]
       }
     ]
@@ -44,19 +44,38 @@
     ],
     "next": [
       {
+        "op": "write_",
+        "args": [
+          "in_scope"
+        ],
         "next": [
           {
-            "next": [],
             "op": "substitute",
             "args": [
               "in_scope"
-            ]
+            ],
+            "next": []
           },
           {
+            "op": "write_",
+            "args": [
+              "fn",
+              "x"
+            ],
             "next": [
               {
+                "op": "write",
+                "args": [
+                  "fn",
+                  "x"
+                ],
                 "next": [
                   {
+                    "op": "read",
+                    "args": [
+                      "fn",
+                      "fnresult"
+                    ],
                     "next": [
                       {
                         "op": "create",
@@ -113,64 +132,51 @@
                         ]
                       },
                       {
-                        "next": [],
                         "op": "read_",
                         "args": [
                           "string"
-                        ]
+                        ],
+                        "next": []
                       }
-                    ],
-                    "op": "read",
-                    "args": [
-                      "fn",
-                      "fnresult"
                     ]
                   }
-                ],
-                "op": "write",
-                "args": [
-                  "fn",
-                  "x"
                 ]
               }
-            ],
-            "op": "write_",
-            "args": [
-              "fn",
-              "x"
             ]
           }
-        ],
-        "op": "write_",
-        "args": [
-          "in_scope"
         ]
       }
     ]
   },
   {
+    "op": "write",
+    "args": [
+      "g",
+      {
+        "op": "in",
+        "args": [
+          "f",
+          "pw"
+        ],
+        "next": []
+      }
+    ],
     "next": [
       {
+        "op": "write",
+        "args": [
+          "f",
+          {
+            "op": "in_",
+            "args": [
+              "g",
+              "pw"
+            ],
+            "next": []
+          }
+        ],
         "next": [
           {
-            "next": [
-              {
-                "next": [
-                  {
-                    "op": "create",
-                    "args": [
-                      "result"
-                    ],
-                    "next": []
-                  }
-                ],
-                "op": "read",
-                "args": [
-                  "g",
-                  "result"
-                ]
-              }
-            ],
             "op": "write",
             "args": [
               "f",
@@ -190,32 +196,26 @@
                   }
                 ]
               }
+            ],
+            "next": [
+              {
+                "op": "read",
+                "args": [
+                  "g",
+                  "result"
+                ],
+                "next": [
+                  {
+                    "op": "create",
+                    "args": [
+                      "result"
+                    ],
+                    "next": []
+                  }
+                ]
+              }
             ]
           }
-        ],
-        "op": "write",
-        "args": [
-          "f",
-          {
-            "next": [],
-            "op": "in_",
-            "args": [
-              "g",
-              "pw"
-            ]
-          }
-        ]
-      }
-    ],
-    "op": "write",
-    "args": [
-      "g",
-      {
-        "next": [],
-        "op": "in",
-        "args": [
-          "f",
-          "pw"
         ]
       }
     ]
