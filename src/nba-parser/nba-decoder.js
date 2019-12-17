@@ -36,22 +36,36 @@ function decode (obj) {
 }
 
 function decodeOp(ob) {
+  const args = ob.args.map(decodeArg)
   switch (ob.op) {
     case 'in':
     case 'out':
+      return new cap(ob.op, args[0], args[1])
     case 'read':
     case 'write':
-      return new cap(ob.op, decodeName(ob.args[0]), ob.args.slice(1).map(decodeName))
+      return new cap(ob.op, args[0], args.slice(1))
     case 'in_':
     case 'out_':
+      return new cap(ob.op, args[0], args[1])
     case 'read_':
     case 'write_':
-      return new cocap(ob.op, ob.args.map(decodeName))
+      return new cocap(ob.op, args)
     case 'substitute':
-      return new subst(decodeName(ob.args[0]))
+      return new subst(args[0])
     default:
       throw new Error()
   }
+}
+
+function decodeArg (arg) {
+  if (arg.subst !== undefined)
+    return new substTarget(arg.subst)
+
+  if (arg.op !== undefined) {
+    return decode(arg)
+  }
+
+  return arg
 }
 
 function decodeName (name) {
