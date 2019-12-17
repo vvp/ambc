@@ -17,8 +17,10 @@ describe('NBA Parser', function () {
       // console.log(JSON.stringify(parse(syntax.toString().trim())))
       const result = fs.readFileSync(PARSER_FIXTURES_PATH + fixtures[1]).toString().trim()
       const nba = parser.parse(syntax)
+      const nba2 = parser.decode(JSON.parse(result))
 
       console.log("nba.toJS(): " + JSON.stringify(nba.toJS()))
+      console.log("nba2.toAlgebra(): " + nba2.toAlgebra())
 
 
       const rnd = seedrandom()
