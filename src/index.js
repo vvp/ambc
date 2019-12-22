@@ -14,7 +14,7 @@ const js = {
   parse: (js) => {
     const ambientSyntax = js2amb(js)
     const res = ambients.parse(ambientSyntax)
-    return JSON.stringify(res.toJS())
+    return res.toJS()
   }
 }
 
@@ -36,9 +36,9 @@ const output = async (ipfs, ambient, argv) => {
 
   // --display flag
   // -o option
-  if (argv.display) return result
+  if (argv.display) return JSON.stringify(result)
   if (argv.o) {
-    fs.writeFileSync(argv.o, result)
+    fs.writeFileSync(argv.o, JSON.stringify(result))
     return 'Wrote program to ' + argv.o
   }
 
