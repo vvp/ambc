@@ -54,16 +54,21 @@ const argv = require('yargs')
   mime.extensions['text/ambients'] = ['ambient']
   mime.types.ambient = 'text/ambients'
 
-  const file = fs.readFileSync(argv.input).toString().trim()
-
   let result
-  switch (mime.lookup(argv.input)) {
-    case 'application/javascript':
-      result = await output(ipfs, file, argv); break
-    case 'text/ambients':
-      result = await output(ipfs, file, argv); break
-    default:
-      throw new Error('File type not recognized')
+
+  try {
+    const file = fs.readFileSync(argv.input).toString().trim()
+
+    switch (mime.lookup(argv.input)) {
+      case 'application/javascript':
+        result = await output(ipfs, file, argv); break
+      case 'text/ambients':
+        result = await output(ipfs, file, argv); break
+      default:
+        throw new Error('File type not recognized')
+    }
+  } catch (e) {
+    console.error(e)
   }
 
   process.stdout.write(result + '\n')
