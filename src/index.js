@@ -1,5 +1,5 @@
 const irParser = require('./ir')
-const parse = require('./parser')
+const parse = require('./nba-parser').parse
 const js2amb = require('js2amb')
 const io = require('orbit-db-io')
 const fs = require('fs')
@@ -13,7 +13,8 @@ const js = {
   },
   parse: (js) => {
     const ambientSyntax = js2amb(js)
-    return ambients.parse(ambientSyntax)
+    const res = ambients.parse(ambientSyntax)
+    return JSON.stringify(res.toJS())
   }
 }
 
@@ -35,8 +36,11 @@ const output = async (ipfs, ambient, argv) => {
 
   // --display flag
   // -o option
-  if (argv.display) return process.stdout.write(result)
-  if (argv.o) return fs.writeFileSync(argv.o, result)
+  if (argv.display) return result
+  if (argv.o) {
+    fs.writeFileSync(argv.o, result)
+    return 'Wrote program to ' + argv.o
+  }
 
   const hash = await io.write(ipfs, 'dag-cbor', result)
   return hash
