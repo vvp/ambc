@@ -15,7 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "flex-js": "^1.0.5",
-    "js2amb": "aphelionz/js2amb#master",
+    "js2amb": "haadcode/js2amb#feat/curly-syntax",
     "mime-types": "^2.1.25",
     "multiaddr": "^7.2.1",
     "nearley": "^2.19.0",
