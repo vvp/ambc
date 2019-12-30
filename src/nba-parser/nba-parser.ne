@@ -43,7 +43,7 @@ OUTS ->
     "out_" _ "(" NAME_BINDING _ "," _ NAME ")" {% ([,,,name,,,,pw]) => new ast.cocap('out_', [name, pw]) %}
 
 MESSAGE_OP ->
-    "{" NAME {% ([,name]) => new ast.subst(name)  %} "}"
+    "{" NAME "}" {% ([,name]) => new ast.subst(name) %}
 
 MESSAGE ->
     SEQUENTIAL {% id %} |

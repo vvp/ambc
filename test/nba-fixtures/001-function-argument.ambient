@@ -1,8 +1,8 @@
 g[write_ (in_scope).(
-  :{in_scope}|
+  {in_scope}|
   write_ (x).read_ ({x}))]|
 f[write_ (in_scope).(
-  :{in_scope}|
+  {in_scope}|
   write_ (fn, x).
     write ({fn}, {x}).read ({fn}, fnresult).(
     string[

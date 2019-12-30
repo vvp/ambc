@@ -38,7 +38,7 @@ function subst( target ) {
   this.op = 'substitute'
   this.args = target
   this.toJS = () => initOp({op: this.op, args:toJS([this.args])})
-  this.toAlgebra = () => `:${toAlgebra(this.args)}`
+  this.toAlgebra = () => `{${toAlgebra(this.args)}}`
 }
 
 function cap( op, target, names ) {

@@ -14,9 +14,7 @@
           {
             "op": "substitute",
             "args": [
-              {
-                "subst": "in_scope"
-              }
+              "in_scope"
             ],
             "next": []
           },
@@ -56,9 +54,7 @@
           {
             "op": "substitute",
             "args": [
-              {
-                "subst": "in_scope"
-              }
+              "in_scope"
             ],
             "next": []
           },
@@ -76,7 +72,11 @@
                     "subst": "fn"
                   },
                   {
-                    "subst": "x"
+                    "op": "substitute",
+                    "args": [
+                      "x"
+                    ],
+                    "next": []
                   }
                 ],
                 "next": [

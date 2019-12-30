@@ -1,11 +1,11 @@
 func[
   write_ (in_scope).(
-    :in_scope|
+    {in_scope}|
     write_ ().(
       read_ (func)|
       func[
         write_ (in_scope).(
-          :in_scope|
+          {in_scope}|
           write_ (x, y).(
             string[
               plus[

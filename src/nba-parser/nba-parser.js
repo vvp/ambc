@@ -46,7 +46,7 @@ var grammar = {
     {"name": "OUTS", "symbols": ["OUTS$string$1", "_", {"literal":"("}, "NAME", "_", {"literal":","}, "_", "NAME", {"literal":")"}], "postprocess": ([,,,name,,,,pw]) => new ast.cap('out', name, pw)},
     {"name": "OUTS$string$2", "symbols": [{"literal":"o"}, {"literal":"u"}, {"literal":"t"}, {"literal":"_"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "OUTS", "symbols": ["OUTS$string$2", "_", {"literal":"("}, "NAME_BINDING", "_", {"literal":","}, "_", "NAME", {"literal":")"}], "postprocess": ([,,,name,,,,pw]) => new ast.cocap('out_', [name, pw])},
-    {"name": "MESSAGE_OP", "symbols": [{"literal":":"}, "NAME"], "postprocess": ([,name]) => new ast.subst(name)},
+    {"name": "MESSAGE_OP", "symbols": [{"literal":"{"}, "NAME", {"literal":"}"}], "postprocess": ([,name]) => new ast.subst(name)},
     {"name": "MESSAGE", "symbols": ["SEQUENTIAL"], "postprocess": id},
     {"name": "MESSAGE", "symbols": ["NAME"], "postprocess": id},
     {"name": "MESSAGES", "symbols": ["MESSAGES", "_", {"literal":","}, "_", "MESSAGE"], "postprocess": ([left,,,,right]) => ast.array(left, right)},
